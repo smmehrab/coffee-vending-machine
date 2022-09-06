@@ -1,0 +1,2 @@
+Coffee,5
+Cappuccino,5
