@@ -17,12 +17,14 @@ public class Machine {
     private Money paidMoney;
 
     /* product variables */
-	private String inventoryFilePath = Paths.get(Paths.get("").toAbsolutePath().toString(), "data", "inventory.txt").toString();
 	private ArrayList<Product> inventory;
     private Product product;
 	private int maxProductNameLength;
 
-	/* others */
+	/* file & i/o */
+	private String inventoryFilePath = Paths.get(Paths.get("").toAbsolutePath().toString(), "data", "inventory.txt").toString();
+	private String moneyFilePath = Paths.get(Paths.get("").toAbsolutePath().toString(), "data", "money.txt").toString();
+
 	private Scanner scanner = new Scanner(System.in);
 	private File file;
 
@@ -86,7 +88,29 @@ public class Machine {
 		// }
 	}
 
+	public void loadMoney() {
+		file = new File(moneyFilePath);
+        try {
+            scanner = new Scanner(file);
+        } 
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+		machineMoney = new Money();
+		while(scanner.hasNextLine()) {
+			String[] coinOrNoteDetails = scanner.nextLine().split(",");
+			String coinOrNoteType = coinOrNoteDetails[0] + " Cents";
+			int coinOrNoteCount = Integer.parseInt(coinOrNoteDetails[1]);
+			machineMoney.add(coinOrNoteType, coinOrNoteCount);
+		}
+
+		// Debug
+		// System.out.println("Machine Money: " + this.machineMoney.getAmount());
+	}
+
 	public void start() {
+
 		System.out.println();
 		System.out.print(ConsoleColor.GREEN_BOLD);
 		System.out.println("Coffee Vending Machine");
