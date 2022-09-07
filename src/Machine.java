@@ -90,7 +90,31 @@ public class Machine {
 		// 	System.out.println(product.getType().toString());
 		// 	System.out.println(product.getPrice());
 		// 	System.out.println(product.getPreparationTime());
-		// 	System.out.println(product.getAmountLeft());
+		// 	System.out.println(product.getAmountLeft());	
 		// }
+	}
+
+	public void start() {
+		System.out.println();
+		System.out.print(ConsoleColor.GREEN_BOLD);
+		System.out.println("Coffee Vending Machine");
+		System.out.println("-----------------------");
+		System.out.print(ConsoleColor.RESET);
+		System.out.println();
+
+		int maximumNameLength = -1;
+		for(Product product : inventory) {
+			maximumNameLength = Math.max(maximumNameLength, product.getName().length());
+		}
+
+		String stringFormat = "%-";
+		stringFormat += Integer.toString(maximumNameLength);
+		stringFormat += "s %5d cents%n";
+		for(Product product : inventory) {
+			System.out.printf(stringFormat, product.getName(), product.getPrice());
+		}
+		System.out.println();
+
+		this.setState(paymentState);
 	}
 }
