@@ -1,7 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Money {
     private int tenCentsCoins;
     private int twentyCentsCoins;
     private int fiftyCentsCoins;
+    private ArrayList<String> types = new ArrayList<>(List.of("10 Cents", "20 Cents", "30 Cents"));
 
     Money() {}
 
@@ -53,5 +57,9 @@ public class Money {
         amount += (twentyCentsCoins*20);
         amount += (fiftyCentsCoins*50);
         return amount;
+    }
+
+    public ArrayList<String> getTypes() {
+        return types;
     }
 }
