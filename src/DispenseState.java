@@ -25,7 +25,7 @@ public class DispenseState extends State {
     }
 
     @Override
-    public void showMenu() {
+    public void dispenseMoney() {
         // TODO Auto-generated method stub
         
     }
