@@ -1,2 +1,2 @@
-Coffee,5
-Cappuccino,5
+Coffee,120,5
+Cappuccino,150,5
