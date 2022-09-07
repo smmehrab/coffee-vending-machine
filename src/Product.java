@@ -1,16 +1,16 @@
 public class Product {
     private String name;
     private ProductType type;
-    private int centsPrice;
-    private int cupQuantity;
-    private int secondsPreparationTime;
-
-    public Product(String name, ProductType type, int centsPrice, int cupQuantity, int secondsPreparationTime) {
+    private int price;              // cents
+    private int preparationTime;    // seconds
+    private int amountLeft;         // cup
+    
+    public Product(String name, ProductType type, int price, int preparationTime, int amountLeft) {
         this.name = name;
         this.type = type;
-        this.centsPrice = centsPrice;
-        this.cupQuantity = cupQuantity;
-        this.secondsPreparationTime = secondsPreparationTime;
+        this.price = price;
+        this.preparationTime = preparationTime;
+        this.amountLeft = amountLeft;
     }
 
     public String getName() {
@@ -29,28 +29,28 @@ public class Product {
         this.type = type;
     }
 
-    public int getCentsPrice() {
-        return centsPrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setCentsPrice(int centsPrice) {
-        this.centsPrice = centsPrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public int getCupQuantity() {
-        return cupQuantity;
+    public int getPreparationTime() {
+        return preparationTime;
     }
 
-    public void setCupQuantity(int cupQuantity) {
-        this.cupQuantity = cupQuantity;
+    public void setPreparationTime(int preparationTime) {
+        this.preparationTime = preparationTime;
     }
 
-    public int getSecondsPreparationTime() {
-        return secondsPreparationTime;
+    public int getAmountLeft() {
+        return amountLeft;
     }
 
-    public void setSecondsPreparationTime(int secondsPreparationTime) {
-        this.secondsPreparationTime = secondsPreparationTime;
+    public void setAmountLeft(int amountLeft) {
+        this.amountLeft = amountLeft;
     }
-    
+
 }
