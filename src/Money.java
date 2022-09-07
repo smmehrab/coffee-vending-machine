@@ -5,7 +5,7 @@ public class Money {
     private int tenCentsCoins;
     private int twentyCentsCoins;
     private int fiftyCentsCoins;
-    private ArrayList<String> types = new ArrayList<>(List.of("10 Cents", "20 Cents", "30 Cents"));
+    private static ArrayList<String> types = new ArrayList<>(List.of("10 Cents", "20 Cents", "30 Cents"));
 
     Money() {}
 
@@ -59,7 +59,7 @@ public class Money {
         return amount;
     }
 
-    public ArrayList<String> getTypes() {
+    public static ArrayList<String> getTypes() {
         return types;
     }
 }
