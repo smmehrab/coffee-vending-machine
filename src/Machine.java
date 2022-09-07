@@ -17,9 +17,10 @@ public class Machine {
     private Money paidMoney;
 
     /* product variables */
-    private ArrayList<Product> inventory;
-    private Product product;
 	private String inventoryFilePath = Paths.get(Paths.get("").toAbsolutePath().toString(), "data", "inventory.txt").toString();
+	private ArrayList<Product> inventory;
+    private Product product;
+	private int maxProductNameLength;
 
 	/* others */
 	private Scanner scanner = new Scanner(System.in);
@@ -93,13 +94,13 @@ public class Machine {
 		System.out.print(ConsoleColor.RESET);
 		System.out.println();
 
-		int maximumNameLength = -1;
+		maxProductNameLength = -1;
 		for(Product product : inventory) {
-			maximumNameLength = Math.max(maximumNameLength, product.getName().length());
+			maxProductNameLength = Math.max(maxProductNameLength, product.getName().length());
 		}
 
 		String stringFormat = "%-";
-		stringFormat += Integer.toString(maximumNameLength);
+		stringFormat += Integer.toString(maxProductNameLength);
 		stringFormat += "s %5d Cents%n";
 		for(Product product : inventory) {
 			System.out.printf(stringFormat, product.getName(), product.getPrice());
@@ -116,4 +117,17 @@ public class Machine {
 	public Money getPaidMoney() {
 		return this.paidMoney;
 	}
+
+	public int getMaxProductNameLength() {
+		return maxProductNameLength;
+	}
+
+	public ArrayList<Product> getInventory() {
+		return inventory;
+	}
+
+	public int getNumberOfProducts() {
+		return inventory.size();
+	}
+	
 }
