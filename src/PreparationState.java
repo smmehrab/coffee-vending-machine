@@ -1,11 +1,11 @@
-public class OrderState extends State {
-    
+public class PreparationState extends State {
+
     private Machine machine;
 
-    public OrderState(Machine machine) {
+    public PreparationState(Machine machine) {
         this.machine = machine;
     }
-    
+
     @Override
     public void insertCoin() {
         // TODO Auto-generated method stub

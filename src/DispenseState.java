@@ -1,8 +1,8 @@
-public class OrderState extends State {
-    
+public class DispenseState extends State {
+
     private Machine machine;
 
-    public OrderState(Machine machine) {
+    public DispenseState(Machine machine) {
         this.machine = machine;
     }
     
