@@ -5,6 +5,6 @@ public class App {
 
         Machine machine = Machine.getInstance();
         machine.loadInventory();
-
+        machine.start();
     }
 }
