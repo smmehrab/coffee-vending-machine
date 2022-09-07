@@ -2,60 +2,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Money {
-    private int tenCentsCoins;
-    private int twentyCentsCoins;
-    private int fiftyCentsCoins;
+    private int tenCentsCount;
+    private int twentyCentsCount;
+    private int fiftyCentsCount;
     private static ArrayList<String> types = new ArrayList<>(List.of("10 Cents", "20 Cents", "30 Cents"));
 
     Money() {}
 
-    Money(int tenCentsCoins, int twentyCentsCoins, int fiftyCentsCoins) {
-        this.tenCentsCoins = tenCentsCoins;
-        this.twentyCentsCoins = twentyCentsCoins;
-        this.fiftyCentsCoins = fiftyCentsCoins;
+    Money(int tenCentsCount, int twentyCentsCount, int fiftyCentsCount) {
+        this.tenCentsCount = tenCentsCount;
+        this.twentyCentsCount = twentyCentsCount;
+        this.fiftyCentsCount = fiftyCentsCount;
     }
 
-    public int getTenCentsCoins() {
-        return tenCentsCoins;
+    public int getTenCentsCount() {
+        return tenCentsCount;
     }
 
-    public void setTenCentsCoins(int count) {
-        this.tenCentsCoins = count;
+    public void setTenCentsCount(int count) {
+        this.tenCentsCount = count;
     }
 
-    public void addTenCentsCoins(int count) {
-        this.tenCentsCoins += count;
+    public void addTenCentsCount(int count) {
+        this.tenCentsCount += count;
     }
 
-    public int getTwentyCentsCoins() {
-        return twentyCentsCoins;
+    public int getTwentyCentsCount() {
+        return twentyCentsCount;
     }
 
-    public void setTwentyCentsCoins(int count) {
-        this.twentyCentsCoins = count;
+    public void setTwentyCentsCount(int count) {
+        this.twentyCentsCount = count;
     }
 
-    public void addTwentyCentsCoins(int count) {
-        this.twentyCentsCoins += count;
+    public void addTwentyCentsCount(int count) {
+        this.twentyCentsCount += count;
     }
 
-    public int getFiftyCentsCoins() {
-        return fiftyCentsCoins;
+    public int getFiftyCentsCount() {
+        return fiftyCentsCount;
     }
 
-    public void setFiftyCentsCoins(int count) {
-        this.fiftyCentsCoins = count;
+    public void setFiftyCentsCount(int count) {
+        this.fiftyCentsCount = count;
     }
 
-    public void addFiftyCentsCoins(int count) {
-        this.fiftyCentsCoins += count;
+    public void addFiftyCentsCount(int count) {
+        this.fiftyCentsCount += count;
     }
 
     public int getAmount() {
         int amount = 0;
-        amount += (tenCentsCoins*10);
-        amount += (twentyCentsCoins*20);
-        amount += (fiftyCentsCoins*50);
+        amount += (tenCentsCount*10);
+        amount += (twentyCentsCount*20);
+        amount += (fiftyCentsCount*50);
         return amount;
     }
 
