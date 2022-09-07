@@ -9,18 +9,12 @@ public class Machine {
 	/* private instance variable for Singleton Class */
     private static Machine instance;
 
-    /* current state */
+    /* machine state */
     private State state;
-
-    /* possible states */
-    private State paymentState;
-    private State orderState;
-    private State preparationState;
-    private State dispenseState;
 
     /* money variables */
     private Money machineMoney;
-    private Money insertedMoney;
+    private Money paidMoney;
 
     /* product variables */
     private ArrayList<Product> inventory;
@@ -28,16 +22,13 @@ public class Machine {
 	private String inventoryFilePath = Paths.get(Paths.get("").toAbsolutePath().toString(), "data", "inventory.txt").toString();
 
 	/* others */
-	private Scanner scanner;
+	private Scanner scanner = new Scanner(System.in);
 	private File file;
 
 	/* private constructor */
 
     private Machine() {
-        this.paymentState = new PaymentState(instance);
-		this.orderState = new OrderState(instance);
-		this.preparationState = new OrderState(instance);
-		this.dispenseState = new DispenseState(instance);
+
     }
 
 	/* public getInstance() */
@@ -109,12 +100,20 @@ public class Machine {
 
 		String stringFormat = "%-";
 		stringFormat += Integer.toString(maximumNameLength);
-		stringFormat += "s %5d cents%n";
+		stringFormat += "s %5d Cents%n";
 		for(Product product : inventory) {
 			System.out.printf(stringFormat, product.getName(), product.getPrice());
 		}
 		System.out.println();
 
-		this.setState(paymentState);
+		this.setState(new PaymentState(this));
+	}
+
+	public void setPaidMoney(Money money) {
+		this.paidMoney = money;
+	}
+
+	public Money getPaidMoney() {
+		return this.paidMoney;
 	}
 }
