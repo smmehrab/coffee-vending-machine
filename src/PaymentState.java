@@ -23,5 +23,11 @@ public class PaymentState extends State {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void showMenu() {
+        // TODO Auto-generated method stub
+        
+    }
     
 }
