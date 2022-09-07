@@ -5,9 +5,11 @@ public class Money {
     private int tenCentsCount;
     private int twentyCentsCount;
     private int fiftyCentsCount;
-    private static ArrayList<String> types = new ArrayList<>(List.of("10 Cents", "20 Cents", "30 Cents"));
+    private static ArrayList<String> types = new ArrayList<>(List.of("10 Cents", "20 Cents", "50 Cents"));
 
-    Money() {}
+    Money() {
+        this.reset();
+    }
 
     Money(int tenCentsCount, int twentyCentsCount, int fiftyCentsCount) {
         this.tenCentsCount = tenCentsCount;
@@ -15,40 +17,38 @@ public class Money {
         this.fiftyCentsCount = fiftyCentsCount;
     }
 
-    public int getTenCentsCount() {
-        return tenCentsCount;
+    public static ArrayList<String> getTypes() {
+        return types;
     }
 
-    public void setTenCentsCount(int count) {
-        this.tenCentsCount = count;
+    public void add(String type, int numberOfCoinsOrNotes) {
+        switch(type) {
+            case "10 Cents":
+                this.tenCentsCount += numberOfCoinsOrNotes;
+                break;
+            case "20 Cents":
+                this.twentyCentsCount += numberOfCoinsOrNotes;
+                break;
+            case "50 Cents":
+                this.fiftyCentsCount += numberOfCoinsOrNotes;
+                break;
+            default:
+                break;
+        }
     }
 
-    public void addTenCentsCount(int count) {
-        this.tenCentsCount += count;
-    }
-
-    public int getTwentyCentsCount() {
-        return twentyCentsCount;
-    }
-
-    public void setTwentyCentsCount(int count) {
-        this.twentyCentsCount = count;
-    }
-
-    public void addTwentyCentsCount(int count) {
-        this.twentyCentsCount += count;
-    }
-
-    public int getFiftyCentsCount() {
-        return fiftyCentsCount;
-    }
-
-    public void setFiftyCentsCount(int count) {
-        this.fiftyCentsCount = count;
-    }
-
-    public void addFiftyCentsCount(int count) {
-        this.fiftyCentsCount += count;
+    public int getCount(String type) {
+        switch(type) {
+            case "10 Cents":
+                return this.tenCentsCount;
+            case "20 Cents":
+                return this.twentyCentsCount;
+            case "50 Cents":
+                return this.fiftyCentsCount;
+            default:
+                break;
+        }
+        return 0;
     }
 
     public int getAmount() {
@@ -59,7 +59,9 @@ public class Money {
         return amount;
     }
 
-    public static ArrayList<String> getTypes() {
-        return types;
+    public void reset() {
+        this.tenCentsCount = 0;
+        this.twentyCentsCount = 0;
+        this.fiftyCentsCount = 0;
     }
 }
