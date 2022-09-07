@@ -36,7 +36,7 @@ public class PaymentState extends State {
 		System.out.println();
 
         System.out.println("Number of Coins/Notes\n");
-		String stringFormat = "%10s: ";
+		String stringFormat = "%11s: ";
         ArrayList<String> moneyTypes = Money.getTypes();
         int numberOfCoinsOrNotes;
         for(String type : moneyTypes) {
