@@ -98,7 +98,8 @@ public class Money {
             coinOrNote = Integer.parseInt(type.split(" ")[0]);
             coinOrNoteCount = 0;
 
-            System.out.println(coinOrNote + " " + remainder);
+            // Debug
+            // System.out.println(coinOrNote + " " + remainder);
 
             do {
                 if(remainder<coinOrNote) {
