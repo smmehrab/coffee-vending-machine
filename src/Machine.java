@@ -179,4 +179,13 @@ public class Machine {
 	public void setChosenProduct(Product chosenProduct) {
 		this.chosenProduct = chosenProduct;
 	}
+	
+	public void setMachineMoney(Money machineMoney) {
+		this.machineMoney = machineMoney;
+	}
+
+	public Money getMachineMoney() {
+		return machineMoney;
+	}
+
 }
