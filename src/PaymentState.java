@@ -19,7 +19,7 @@ public class PaymentState extends State {
 
         this.showPaidStatus();
 
-        this.insertCoin();
+        this.insertMoney();
     }
 
     private void proceed() {
@@ -34,11 +34,11 @@ public class PaymentState extends State {
     private void reset() {
         this.payment.reset();
         this.showPaidStatus();
-        this.insertCoin();
+        this.insertMoney();
     }
 
     @Override
-    public void insertCoin() {
+    public void insertMoney() {
 
         System.out.println("Number of Coins/Notes\n");
 		String stringFormat = "%11s: ";
@@ -57,11 +57,11 @@ public class PaymentState extends State {
         System.out.print(ConsoleColor.RESET);
 		System.out.println("\n");
 
-        this.pressButton();
+        this.interactWithMenu();
     }
 
     @Override
-    public void pressButton() {
+    public void interactWithMenu() {
 		String stringFormat = "%4s: %-10s";
         System.out.printf(stringFormat, "1", "Proceed");
         System.out.println();

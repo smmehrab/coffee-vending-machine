@@ -20,17 +20,17 @@ public class OrderState extends State {
         // System.out.println(machine.getPaidMoney().getAmount());
         // System.out.println();
     
-        this.pressButton();
+        this.interactWithMenu();
     }
     
     @Override
-    public void insertCoin() {
+    public void insertMoney() {
         /* Go to PaymentState */
         this.machine.setState(new PaymentState(machine));
     }
 
     @Override
-    public void pressButton() {
+    public void interactWithMenu() {
 
         System.out.println("Choose Your Coffee:\n");
 
@@ -139,10 +139,10 @@ public class OrderState extends State {
         System.out.println();
 
         if(choice == 1) {
-            this.pressButton();
+            this.interactWithMenu();
         }
         else if(choice == 2) {
-            this.insertCoin();
+            this.insertMoney();
         }
     }
 

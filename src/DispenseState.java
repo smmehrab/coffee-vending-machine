@@ -27,14 +27,14 @@ public class DispenseState extends State {
     }
     
     @Override
-    public void insertCoin() {
+    public void insertMoney() {
         /* Go to PaymentState */
         this.machine.clearPaidMoney();
         this.machine.setState(new PaymentState(machine));
     }
 
     @Override
-    public void pressButton() {
+    public void interactWithMenu() {
         /* Invalid for DispenseState */
     }
 
@@ -54,7 +54,7 @@ public class DispenseState extends State {
         System.out.print(ConsoleColor.RESET);
         System.out.println("\n");
 
-        this.insertCoin();
+        this.insertMoney();
     }
 
     @Override
