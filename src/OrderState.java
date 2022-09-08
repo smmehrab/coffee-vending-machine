@@ -25,6 +25,7 @@ public class OrderState extends State {
     
     @Override
     public void insertCoin() {
+        /* Go to PaymentState */
         this.machine.setState(new PaymentState(machine));
     }
 
@@ -50,7 +51,7 @@ public class OrderState extends State {
         productSelector = scanner.nextInt();
 
         if(productSelector == 0) {
-            this.cancelOrder();
+            this.cancelOrder("UserAction");
         }
         else if(productSelector>=1 && productSelector<=numberOfProducts) {
             this.placeOrder(productSelector-1);
@@ -59,7 +60,7 @@ public class OrderState extends State {
 
     @Override
     public void dispenseProduct() {
-        // TODO
+        /* Not Valid for Order State*/
     }
 
     @Override
@@ -80,42 +81,42 @@ public class OrderState extends State {
             System.out.println();
 		}
 		System.out.println();
-        
-    }
-    
-    private void cancelOrder() {
-        dispenseMoney();
-
-        System.out.print(ConsoleColor.GREEN_BRIGHT);
-        System.out.print("[Order Cancelled]");
-        System.out.print(ConsoleColor.RESET);
-		System.out.println("\n\n");
-
-        this.machine.setState(new PaymentState(machine));
     }
 
     private void placeOrder(int productIndex) {
         Product product = this.machine.getInventory().get(productIndex);
         Money paidMoney = this.machine.getPaidMoney();
 
+        String stringFormat = "%10s";
         System.out.println();
         System.out.print("Paid : ");
         System.out.print(ConsoleColor.GREEN_BRIGHT);
-        System.out.print(Integer.toString(paidMoney.getAmount()) + " Cents");
+        System.out.printf(stringFormat, Integer.toString(paidMoney.getAmount()) + " Cents");
         System.out.print(ConsoleColor.RESET);
 		System.out.println();
         System.out.print("Price: ");
         System.out.print(ConsoleColor.GREEN_BRIGHT);
-        System.out.print(Integer.toString(product.getPrice()) + " Cents");
+        System.out.printf(stringFormat, Integer.toString(product.getPrice()) + " Cents");
         System.out.print(ConsoleColor.RESET);
-		System.out.println("\n");
 
         if(paidMoney.getAmount()<product.getPrice()) {
             this.denyOrder();
         }
 
         else {
-            this.acceptOrder(product, paidMoney);
+            MoneyReturn returnMoney = Money.calculateReturn(paidMoney, product.getPrice());
+            System.out.println();
+
+            // Debug
+            // System.out.println(returnMoney.getStatus());
+            // System.out.println(returnMoney.getMoney().getAmount());
+
+            if(returnMoney.getStatus()) {
+                this.acceptOrder(returnMoney);
+            }
+            else {
+                this.cancelOrder("ShortOnChange");
+            }
         }
     }
 
@@ -144,16 +145,36 @@ public class OrderState extends State {
         }
     }
 
-    private void acceptOrder(Product product, Money paidMoney) {
+    private void acceptOrder(MoneyReturn returnMoney) {
+        System.out.println();
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.print("[Order Accepted]");
         System.out.print(ConsoleColor.RESET);
         System.out.println("\n");
 
-        MoneyReturn returnMoney = Money.calculateReturn(paidMoney, product.getPrice());
-        System.out.println();
-        System.out.println(returnMoney.getStatus());
-        System.out.println(returnMoney.getMoney().getAmount());
+        /* Go to DispenseState */
+        this.machine.setReturnMoney(returnMoney);
+        this.machine.setState(new DispenseState(machine));
+    }
 
+    private void cancelOrder(String reason) {
+        dispenseMoney();
+
+        System.out.print(ConsoleColor.GREEN_BRIGHT);
+        System.out.print("[Order Cancelled]");
+        System.out.print(ConsoleColor.RESET);
+		System.out.println("\n");
+
+        switch(reason) {
+            case "UserAction":
+                break;
+            case "ShortOnChange":
+                System.out.println("Sorry, the machine is short on change. Please, try again.\n");
+                break;
+            default:
+                break;
+        }
+
+        this.machine.setState(new PaymentState(machine));
     }
 }
