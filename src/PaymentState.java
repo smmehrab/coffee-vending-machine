@@ -23,7 +23,7 @@ public class PaymentState extends State {
     }
 
     private void reset() {
-        this.payment = new Money();
+        this.payment.reset();
         this.insertCoin();
     }
 
