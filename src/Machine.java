@@ -188,4 +188,24 @@ public class Machine {
 		return machineMoney;
 	}
 
+	public void updateMachineMoney(String scenario) {
+
+		Money money = new Money();
+
+		if(scenario.equals("payment")) {
+			money = this.paidMoney;
+		}
+		else if(scenario.equals("return")) {
+			money = this.returnMoney.getMoney();
+		}
+
+		for(String type : Money.getTypes()) {
+			if(scenario.equals("payment")) {
+				this.machineMoney.add(type, money.getCount(type));
+			}
+			else if(scenario.equals("return")) {
+				this.machineMoney.remove(type, money.getCount(type));
+			}
+		}
+	}
 }

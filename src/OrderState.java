@@ -115,7 +115,7 @@ public class OrderState extends State {
         }
 
         else {
-            MoneyReturn returnMoney = Money.calculateReturn(paidMoney, product.getPrice());
+            MoneyReturn returnMoney = Money.calculateReturn(paidMoney, product.getPrice(), this.machine.getMachineMoney());
 
             // Debug
             // System.out.println(returnMoney.getStatus());
@@ -185,8 +185,9 @@ public class OrderState extends State {
         System.out.println("\n");
 
         /* Go to DispenseState */
-        this.machine.setChosenProduct(product);
+        this.machine.updateMachineMoney("payment");
         this.machine.setReturnMoney(returnMoney);
+        this.machine.setChosenProduct(product);
         this.machine.setState(new DispenseState(machine));
     }
 

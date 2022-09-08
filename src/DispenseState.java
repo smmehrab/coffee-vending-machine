@@ -74,7 +74,8 @@ public class DispenseState extends State {
             System.out.println();
 		}
 		System.out.println();
-
+        
+        this.machine.updateMachineMoney("return");
         this.machine.clearReturnMoney();
     }
 
