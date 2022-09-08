@@ -80,7 +80,6 @@ public class OrderState extends State {
             System.out.printf(stringFormat, type, paidMoney.getCount(type));
             System.out.println();
 		}
-		System.out.println();
     }
 
     private void placeOrder(int productIndex) {
@@ -98,6 +97,7 @@ public class OrderState extends State {
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.printf(stringFormat, Integer.toString(product.getPrice()) + " Cents");
         System.out.print(ConsoleColor.RESET);
+        System.out.println();
 
         if(paidMoney.getAmount()<product.getPrice()) {
             this.denyOrder();
@@ -105,7 +105,6 @@ public class OrderState extends State {
 
         else {
             MoneyReturn returnMoney = Money.calculateReturn(paidMoney, product.getPrice());
-            System.out.println();
 
             // Debug
             // System.out.println(returnMoney.getStatus());
@@ -121,6 +120,7 @@ public class OrderState extends State {
     }
 
     private void denyOrder() {
+        System.out.println();
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.print("[Order Denied]");
         System.out.print(ConsoleColor.RESET);
@@ -129,14 +129,15 @@ public class OrderState extends State {
         System.out.println("You've got insufficient money. Please:\n");
 
         String stringFormat = "%4s: %-10s";
-        System.out.printf(stringFormat, "1", "Select Another");
+        System.out.printf(stringFormat, "1", "Choose Another");
         System.out.println();
         System.out.printf(stringFormat, "2", "Insert More");
         System.out.println("\n");
         System.out.print("> ");
 
         int choice = scanner.nextInt();
-        
+        System.out.println();
+
         if(choice == 1) {
             this.pressButton();
         }
@@ -160,6 +161,7 @@ public class OrderState extends State {
     private void cancelOrder(String reason) {
         dispenseMoney();
 
+        System.out.println();
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.print("[Order Cancelled]");
         System.out.print(ConsoleColor.RESET);
@@ -175,6 +177,7 @@ public class OrderState extends State {
                 break;
         }
 
+        this.machine.clearPaidMoney();
         this.machine.setState(new PaymentState(machine));
     }
 }

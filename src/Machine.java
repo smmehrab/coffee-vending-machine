@@ -32,7 +32,8 @@ public class Machine {
 	/* private constructor */
 
     private Machine() {
-
+		this.paidMoney = new Money();
+		this.returnMoney = new MoneyReturn(false, new Money());
     }
 
 	/* public getInstance() */

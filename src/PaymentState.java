@@ -9,7 +9,16 @@ public class PaymentState extends State {
 
     public PaymentState(Machine machine) {
         this.machine = machine;
-        this.payment = new Money();
+        this.payment = machine.getPaidMoney();
+        
+        System.out.print(ConsoleColor.GREEN_BOLD);
+		System.out.println("Payment");
+		System.out.println("-----------------------");
+		System.out.print(ConsoleColor.RESET);
+		System.out.println();
+
+        this.showPaidStatus();
+
         this.insertCoin();
     }
 
@@ -24,16 +33,12 @@ public class PaymentState extends State {
 
     private void reset() {
         this.payment.reset();
+        this.showPaidStatus();
         this.insertCoin();
     }
 
     @Override
     public void insertCoin() {
-		System.out.print(ConsoleColor.GREEN_BOLD);
-		System.out.println("Payment");
-		System.out.println("-----------------------");
-		System.out.print(ConsoleColor.RESET);
-		System.out.println();
 
         System.out.println("Number of Coins/Notes\n");
 		String stringFormat = "%11s: ";
@@ -89,7 +94,7 @@ public class PaymentState extends State {
         System.out.print(ConsoleColor.RESET);
 		System.out.println("\n");
 
-		String stringFormat = "%10s: %d";
+		String stringFormat = " %10s: %d";
         ArrayList<String> moneyTypes = Money.getTypes();
         for(String type : moneyTypes) {
             System.out.printf(stringFormat, type, this.payment.getCount(type));
@@ -98,5 +103,13 @@ public class PaymentState extends State {
 		System.out.println();
 
         this.reset();
+    }
+
+    private void showPaidStatus() {
+        System.out.print("Paid: ");
+        System.out.print(ConsoleColor.GREEN_BRIGHT);
+        System.out.print(Integer.toString(this.payment.getAmount()) + " Cents");
+        System.out.print(ConsoleColor.RESET);
+        System.out.println("\n");
     }
 }
