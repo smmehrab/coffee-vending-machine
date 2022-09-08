@@ -65,7 +65,7 @@ public class Money {
         this.fiftyCentsCount = 0;
     }
 
-    public void decrementBy(String type, int decrementCount) {
+    public void decrementCountBy(String type, int decrementCount) {
         switch(type) {
             case "10 Cents":
                 this.tenCentsCount -= decrementCount;
@@ -89,23 +89,34 @@ public class Money {
         int returnMoneyAmount = payment.getAmount()-price;
         int coinOrNote;
         int coinOrNoteCount;
+        int availableCoinOrNoteCount;
         int quotient=0;
         int remainder=returnMoneyAmount;
+
         for (int i = types.size()-1; i >= 0; i--) {
-            type = types.get(0);
+            type = types.get(i);
             coinOrNote = Integer.parseInt(type.split(" ")[0]);
             coinOrNoteCount = 0;
-            
-            remainder = returnMoneyAmount;
-            do {
-                quotient = remainder/coinOrNote;
 
-                if(machinMoney.getCount(type)>=(coinOrNoteCount+quotient)) {
+            System.out.println(coinOrNote + " " + remainder);
+
+            do {
+                if(remainder<coinOrNote) {
+                    break;
+                }
+
+                quotient = remainder/coinOrNote;
+                availableCoinOrNoteCount = machinMoney.getCount(type);
+                if(availableCoinOrNoteCount>=(coinOrNoteCount+quotient)) {
                     remainder %= coinOrNote;
                     coinOrNoteCount += quotient;
+                    machinMoney.decrementCountBy(type, quotient);
                 }
                 else {
-                    
+                    remainder = remainder - (coinOrNote*availableCoinOrNoteCount);
+                    coinOrNoteCount += availableCoinOrNoteCount;
+                    machinMoney.decrementCountBy(type, availableCoinOrNoteCount);
+                    break;
                 }
 
             } while(quotient>0);
