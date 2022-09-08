@@ -65,7 +65,23 @@ public class Money {
         this.fiftyCentsCount = 0;
     }
 
-    public static MoneyReturn calculateReturn(Money payment, int price) {
+    public void decrementBy(String type, int decrementCount) {
+        switch(type) {
+            case "10 Cents":
+                this.tenCentsCount -= decrementCount;
+                break;
+            case "20 Cents":
+                this.twentyCentsCount -= decrementCount;
+                break;
+            case "50 Cents":
+                this.fiftyCentsCount -= decrementCount;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static MoneyReturn calculateReturn(Money payment, int price, Money machinMoney) {
         boolean status = false;
         Money money = new Money();
 
@@ -74,21 +90,30 @@ public class Money {
         int coinOrNote;
         int coinOrNoteCount;
         int quotient=0;
+        int remainder=returnMoneyAmount;
         for (int i = types.size()-1; i >= 0; i--) {
             type = types.get(0);
             coinOrNote = Integer.parseInt(type.split(" ")[0]);
             coinOrNoteCount = 0;
             
+            remainder = returnMoneyAmount;
             do {
-                quotient = returnMoneyAmount/coinOrNote;
-                returnMoneyAmount %= coinOrNote;
-                coinOrNoteCount += quotient;
+                quotient = remainder/coinOrNote;
+
+                if(machinMoney.getCount(type)>=(coinOrNoteCount+quotient)) {
+                    remainder %= coinOrNote;
+                    coinOrNoteCount += quotient;
+                }
+                else {
+                    
+                }
+
             } while(quotient>0);
 
             money.add(type, coinOrNoteCount);
         }
 
-        if(returnMoneyAmount==0) {
+        if(remainder==0) {
             status = true;
         }
         else {
