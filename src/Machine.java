@@ -19,7 +19,7 @@ public class Machine {
 
     /* product variables */
 	private ArrayList<Product> inventory;
-    private Product product;
+    private Product chosenProduct;
 	private int maxProductNameLength;
 
 	/* file & i/o */
@@ -171,5 +171,12 @@ public class Machine {
 	public int getNumberOfProducts() {
 		return inventory.size();
 	}
-	
+
+	public Product getChosenProduct() {
+		return chosenProduct;
+	}
+
+	public void setChosenProduct(Product chosenProduct) {
+		this.chosenProduct = chosenProduct;
+	}
 }

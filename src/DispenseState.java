@@ -22,6 +22,8 @@ public class DispenseState extends State {
         // System.out.println(this.machine.getReturnMoney().getMoney().getAmount());
 
         this.dispenseMoney();
+        this.prepareCoffee();
+        this.dispenseProduct();
     }
     
     @Override
@@ -34,22 +36,21 @@ public class DispenseState extends State {
     @Override
     public void pressButton() {
         /* Invalid for DispenseState */
-        
     }
 
     @Override
     public void dispenseProduct() {
         System.out.print(ConsoleColor.GREEN_BRIGHT);
-        System.out.println("[Coffee Ready]");
+        System.out.println("[" + this.machine.getChosenProduct().getName() + " Ready]");
         System.out.print(ConsoleColor.RESET);
         System.out.println();
 
-        System.out.print("Press ENTER to take the coffee...");
+        System.out.print("Press ENTER to take what's yours...");
         char[] temp = System.console().readPassword();
 
         System.out.println("");
         System.out.print(ConsoleColor.GREEN_BRIGHT);
-        System.out.println("[Enjoy Your Coffee]");
+        System.out.println("[Have A Nice Day]");
         System.out.print(ConsoleColor.RESET);
         System.out.println("\n");
 
@@ -75,16 +76,17 @@ public class DispenseState extends State {
 		System.out.println();
 
         this.machine.clearReturnMoney();
-        this.prepareCoffee();
     }
 
     private void prepareCoffee() {
-        System.out.println("Preparing Your Coffee ...");
+        int preparationTime = this.machine.getChosenProduct().getPreparationTime();
+
+        System.out.println("Preparing Your " + this.machine.getChosenProduct().getName() +" ...");
+        System.out.println("[" + preparationTime + " seconds]");
         System.out.println();
 
         System.out.print(ConsoleColor.GREEN_BRIGHT);
 
-        int preparationTime = 10;
         for (int i = 0; i <= preparationTime; i += 1) {
             progressPercentage(i, preparationTime);
             try {
@@ -97,8 +99,6 @@ public class DispenseState extends State {
         
         System.out.print(ConsoleColor.RESET);
         System.out.println();
-
-        this.dispenseProduct();
     }
     
     private void progressPercentage(int done, int total) {

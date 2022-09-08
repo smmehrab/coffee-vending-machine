@@ -111,7 +111,7 @@ public class OrderState extends State {
             // System.out.println(returnMoney.getMoney().getAmount());
 
             if(returnMoney.getStatus()) {
-                this.acceptOrder(returnMoney);
+                this.acceptOrder(product, returnMoney);
             }
             else {
                 this.cancelOrder("ShortOnChange");
@@ -146,7 +146,7 @@ public class OrderState extends State {
         }
     }
 
-    private void acceptOrder(MoneyReturn returnMoney) {
+    private void acceptOrder(Product product, MoneyReturn returnMoney) {
         System.out.println();
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.print("[Order Accepted]");
@@ -154,6 +154,7 @@ public class OrderState extends State {
         System.out.println("\n");
 
         /* Go to DispenseState */
+        this.machine.setChosenProduct(product);
         this.machine.setReturnMoney(returnMoney);
         this.machine.setState(new DispenseState(machine));
     }
