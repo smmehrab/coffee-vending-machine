@@ -53,4 +53,7 @@ public class Product {
         this.amountLeft = amountLeft;
     }
 
+    public void decrementAmountLeft() {
+        this.amountLeft--;
+    }
 }
