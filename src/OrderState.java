@@ -8,16 +8,7 @@ public class OrderState extends State {
     
     public OrderState(Machine machine) {
         this.machine = machine;
-        this.pressButton();
-    }
-    
-    @Override
-    public void insertCoin() {
-        // TODO Auto-generated method stub
-    }
 
-    @Override
-    public void pressButton() {
         System.out.println();
 		System.out.print(ConsoleColor.GREEN_BOLD);
 		System.out.println("Order");
@@ -28,6 +19,17 @@ public class OrderState extends State {
         // Debug
         // System.out.println(machine.getPaidMoney().getAmount());
         // System.out.println();
+    
+        this.pressButton();
+    }
+    
+    @Override
+    public void insertCoin() {
+        this.machine.setState(new PaymentState(machine));
+    }
+
+    @Override
+    public void pressButton() {
 
         System.out.println("Choose Your Coffee:\n");
 
@@ -51,17 +53,13 @@ public class OrderState extends State {
             this.cancelOrder();
         }
         else if(productSelector>=1 && productSelector<=numberOfProducts) {
-
-        }
-        else {
-
+            this.placeOrder(productSelector-1);
         }
     }
 
     @Override
     public void dispenseProduct() {
-        // TODO Auto-generated method stub
-        
+        // TODO
     }
 
     @Override
@@ -94,5 +92,68 @@ public class OrderState extends State {
 		System.out.println("\n\n");
 
         this.machine.setState(new PaymentState(machine));
+    }
+
+    private void placeOrder(int productIndex) {
+        Product product = this.machine.getInventory().get(productIndex);
+        Money paidMoney = this.machine.getPaidMoney();
+
+        System.out.println();
+        System.out.print("Paid : ");
+        System.out.print(ConsoleColor.GREEN_BRIGHT);
+        System.out.print(Integer.toString(paidMoney.getAmount()) + " Cents");
+        System.out.print(ConsoleColor.RESET);
+		System.out.println();
+        System.out.print("Price: ");
+        System.out.print(ConsoleColor.GREEN_BRIGHT);
+        System.out.print(Integer.toString(product.getPrice()) + " Cents");
+        System.out.print(ConsoleColor.RESET);
+		System.out.println("\n");
+
+        if(paidMoney.getAmount()<product.getPrice()) {
+            this.denyOrder();
+        }
+
+        else {
+            this.acceptOrder(product, paidMoney);
+        }
+    }
+
+    private void denyOrder() {
+        System.out.print(ConsoleColor.GREEN_BRIGHT);
+        System.out.print("[Order Denied]");
+        System.out.print(ConsoleColor.RESET);
+        System.out.println("\n");
+
+        System.out.println("You've got insufficient money. Please:\n");
+
+        String stringFormat = "%4s: %-10s";
+        System.out.printf(stringFormat, "1", "Select Another");
+        System.out.println();
+        System.out.printf(stringFormat, "2", "Insert More");
+        System.out.println("\n");
+        System.out.print("> ");
+
+        int choice = scanner.nextInt();
+        
+        if(choice == 1) {
+            this.pressButton();
+        }
+        else if(choice == 2) {
+            this.insertCoin();
+        }
+    }
+
+    private void acceptOrder(Product product, Money paidMoney) {
+        System.out.print(ConsoleColor.GREEN_BRIGHT);
+        System.out.print("[Order Accepted]");
+        System.out.print(ConsoleColor.RESET);
+        System.out.println("\n");
+
+        MoneyReturn returnMoney = Money.calculateReturn(paidMoney, product.getPrice());
+        System.out.println();
+        System.out.println(returnMoney.getStatus());
+        System.out.println(returnMoney.getMoney().getAmount());
+
     }
 }

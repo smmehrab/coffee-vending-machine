@@ -15,6 +15,7 @@ public class Machine {
     /* money variables */
     private Money machineMoney;
     private Money paidMoney;
+	private MoneyReturn returnMoney;
 
     /* product variables */
 	private ArrayList<Product> inventory;
@@ -140,6 +141,22 @@ public class Machine {
 
 	public Money getPaidMoney() {
 		return this.paidMoney;
+	}
+
+	public void clearPaidMoney() {
+		this.paidMoney.reset();
+	}
+
+	public void setReturnMoney(MoneyReturn moneyReturn) {
+		this.returnMoney = moneyReturn;
+	}
+
+	public MoneyReturn getReturnMoney() {
+		return this.returnMoney;
+	}
+
+	public void clearReturnMoney() {
+		this.returnMoney = new MoneyReturn(false, new Money());
 	}
 
 	public int getMaxProductNameLength() {

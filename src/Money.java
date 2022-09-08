@@ -65,11 +65,36 @@ public class Money {
         this.fiftyCentsCount = 0;
     }
 
-    public static Money calculateReturn(Money payment, Money price) {
-        Money returnMoney = new Money();
-        for(String type : types) {
-            returnMoney.add(type, (payment.getCount(type)-price.getCount(type)));
-		}
-        return returnMoney;
+    public static MoneyReturn calculateReturn(Money payment, int price) {
+        boolean status = false;
+        Money money = new Money();
+
+        String type;
+        int returnMoneyAmount = payment.getAmount()-price;
+        int coinOrNote;
+        int coinOrNoteCount;
+        int quotient=0;
+        for (int i = types.size()-1; i >= 0; i--) {
+            type = types.get(0);
+            coinOrNote = Integer.parseInt(type.split(" ")[0]);
+            coinOrNoteCount = 0;
+            
+            do {
+                quotient = returnMoneyAmount/coinOrNote;
+                returnMoneyAmount %= coinOrNote;
+                coinOrNoteCount += quotient;
+            } while(quotient>0);
+
+            money.add(type, coinOrNoteCount);
+        }
+
+        if(returnMoneyAmount==0) {
+            status = true;
+        }
+        else {
+            money = new Money();
+        }
+
+        return new MoneyReturn(status, money);
     }
 }
