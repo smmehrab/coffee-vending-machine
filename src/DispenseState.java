@@ -4,11 +4,12 @@ public class DispenseState extends State {
 
     public DispenseState(Machine machine) {
         this.machine = machine;
+        this.dispenseMoney();
     }
     
     @Override
     public void insertCoin() {
-        // TODO Auto-generated method stub
+        /* Go to PaymentState */
         
     }
 
@@ -26,8 +27,8 @@ public class DispenseState extends State {
 
     @Override
     public void dispenseMoney() {
-        // TODO Auto-generated method stub
-        
+        System.out.println(this.machine.getReturnMoney().getStatus());
+        System.out.println(this.machine.getReturnMoney().getMoney().getAmount());
     }
     
 }
