@@ -39,12 +39,19 @@ public class OrderState extends State {
         stringFormat += Integer.toString(this.machine.getNumberOfProducts());
         stringFormat += "s: %-";
 		stringFormat += Integer.toString(this.machine.getMaxProductNameLength());
-		stringFormat += "s%n";
+		stringFormat += "s%6s%n";
+        String notAvailable = "[X]";
         int productSelector = 1;
 		for(Product product : this.machine.getInventory()) {
-			System.out.printf(stringFormat, productSelector++, product.getName());
+            if(product.getAmountLeft()>0) {
+                System.out.printf(stringFormat, productSelector++, product.getName(), "");
+            }
+            else {
+                System.out.printf(stringFormat, productSelector++, product.getName(), notAvailable);
+            }
+ 
 		}
-        System.out.printf(stringFormat, 0, "Cancel Order");
+        System.out.printf(stringFormat, 0, "Cancel Order", "");
 		System.out.println();
 
         System.out.print("> ");
@@ -100,7 +107,11 @@ public class OrderState extends State {
         System.out.println();
 
         if(paidMoney.getAmount()<product.getPrice()) {
-            this.denyOrder();
+            this.denyOrder(productIndex, "InsufficientMoney");
+        }
+
+        else if(product.getAmountLeft()<=0) {
+            this.denyOrder(productIndex, "ProductShortage");
         }
 
         else {
@@ -111,7 +122,7 @@ public class OrderState extends State {
             // System.out.println(returnMoney.getMoney().getAmount());
 
             if(returnMoney.getStatus()) {
-                this.acceptOrder(product, returnMoney);
+                this.acceptOrder(productIndex, returnMoney);
             }
             else {
                 this.cancelOrder("ShortOnChange");
@@ -119,24 +130,38 @@ public class OrderState extends State {
         }
     }
 
-    private void denyOrder() {
+    private void denyOrder(int productIndex, String reason) {
+        Product product = this.machine.getInventory().get(productIndex);
+
         System.out.println();
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.print("[Order Denied]");
         System.out.print(ConsoleColor.RESET);
         System.out.println("\n");
 
-        System.out.println("You've got insufficient money. Please:\n");
+        switch(reason) {
+            case "InsufficientMoney":
+                int moneyShort = product.getPrice() - this.machine.getPaidMoney().getAmount();
+                System.out.println("Sorry, you are " + moneyShort + " Cents short. Please:\n");
+                break;
+            case "ProductShortage":
+                System.out.println("Sorry, " + product.getName() + " is not available right now. Please:\n");
+                break;
+            default:
+                break;
+        }
 
         String stringFormat = "%4s: %-10s";
         System.out.printf(stringFormat, "1", "Choose Another");
         System.out.println();
         System.out.printf(stringFormat, "2", "Insert More");
-        System.out.println("\n");
+        System.out.println();
+        System.out.printf(stringFormat, "3", "Cancel Order");
+        System.out.println();
+        System.out.println();
         System.out.print("> ");
 
         int choice = scanner.nextInt();
-        System.out.println();
 
         if(choice == 1) {
             this.interactWithMenu();
@@ -144,9 +169,15 @@ public class OrderState extends State {
         else if(choice == 2) {
             this.insertMoney();
         }
+        else if(choice == 3) {
+            this.cancelOrder("UserAction");
+        }
     }
 
-    private void acceptOrder(Product product, MoneyReturn returnMoney) {
+    private void acceptOrder(int productIndex, MoneyReturn returnMoney) {
+        Product product = this.machine.getInventory().get(productIndex);
+        this.machine.getInventory().get(productIndex).decrementAmountLeft();
+
         System.out.println();
         System.out.print(ConsoleColor.GREEN_BRIGHT);
         System.out.print("[Order Accepted]");
