@@ -81,7 +81,7 @@ public class Money {
         this.fiftyCentsCount = 0;
     }
 
-    public static MoneyReturn calculateReturn(Money payment, int price, Money machinMoney) {
+    public static MoneyReturn calculateReturn(Money payment, int price, Money machineMoney) {
         boolean status = false;
         Money money = new Money();
 
@@ -106,16 +106,16 @@ public class Money {
                 }
 
                 quotient = remainder/coinOrNote;
-                availableCoinOrNoteCount = machinMoney.getCount(type);
+                availableCoinOrNoteCount = machineMoney.getCount(type);
                 if(availableCoinOrNoteCount>=(coinOrNoteCount+quotient)) {
                     remainder %= coinOrNote;
                     coinOrNoteCount += quotient;
-                    machinMoney.decrementCountBy(type, quotient);
+                    machineMoney.remove(type, quotient);
                 }
                 else {
                     remainder = remainder - (coinOrNote*availableCoinOrNoteCount);
                     coinOrNoteCount += availableCoinOrNoteCount;
-                    machinMoney.decrementCountBy(type, availableCoinOrNoteCount);
+                    machineMoney.remove(type, availableCoinOrNoteCount);
                     break;
                 }
 
