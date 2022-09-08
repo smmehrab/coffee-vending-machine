@@ -64,4 +64,12 @@ public class Money {
         this.twentyCentsCount = 0;
         this.fiftyCentsCount = 0;
     }
+
+    public static Money calculateReturn(Money payment, Money price) {
+        Money returnMoney = new Money();
+        for(String type : types) {
+            returnMoney.add(type, (payment.getCount(type)-price.getCount(type)));
+		}
+        return returnMoney;
+    }
 }
