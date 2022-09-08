@@ -37,6 +37,22 @@ public class Money {
         }
     }
 
+    public void remove(String type, int numberOfCoinsOrNotes) {
+        switch(type) {
+            case "10 Cents":
+                this.tenCentsCount -= numberOfCoinsOrNotes;
+                break;
+            case "20 Cents":
+                this.twentyCentsCount -= numberOfCoinsOrNotes;
+                break;
+            case "50 Cents":
+                this.fiftyCentsCount -= numberOfCoinsOrNotes;
+                break;
+            default:
+                break;
+        }
+    }
+
     public int getCount(String type) {
         switch(type) {
             case "10 Cents":
@@ -63,22 +79,6 @@ public class Money {
         this.tenCentsCount = 0;
         this.twentyCentsCount = 0;
         this.fiftyCentsCount = 0;
-    }
-
-    public void decrementCountBy(String type, int decrementCount) {
-        switch(type) {
-            case "10 Cents":
-                this.tenCentsCount -= decrementCount;
-                break;
-            case "20 Cents":
-                this.twentyCentsCount -= decrementCount;
-                break;
-            case "50 Cents":
-                this.fiftyCentsCount -= decrementCount;
-                break;
-            default:
-                break;
-        }
     }
 
     public static MoneyReturn calculateReturn(Money payment, int price, Money machinMoney) {
