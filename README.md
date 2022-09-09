@@ -30,10 +30,10 @@ Your task is to implement coffee vending machine simulator program. You may assu
 
 <br>
 
-## Solution
+## Design
 
-The class diagram that's designed to solve the above problem, is given below:
+Possible states of the coffee vending machine are visualized below:
 
-![Class Diagram](class-diagram.png)
+![States of the Machine](states.png)
 
-Note that, this is just a rough solution. I hope to further work on it later and modify it for better. 
+More detailed documentation will be added later. Moreover, I hope to make further changes to this repository in future.
